@@ -41,7 +41,7 @@ def logout():
 @app.route("/register", methods=['GET','POST'])
 def register():
     form = RegistrationForm()
-    register_fields = [form.first_name, form.last_name, form.email, form.password, form.confirm_password]
+    register_fields = [form.first_name, form.last_name, form.email, form.profile_picture, form.password, form.confirm_password]
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     if form.validate_on_submit():
@@ -64,7 +64,7 @@ def register():
 @login_required
 def post():
     form = PostForm()
-    post_fields = [form.title, form.content]
+    post_fields = [form.title, form.content, form.photos]
     if form.validate_on_submit():
         postData = Posts(
             title=form.title.data,
@@ -82,7 +82,7 @@ def post():
 @login_required
 def account():
     form = UpdateAccountForm()
-    update_fields = [form.first_name, form.last_name, form.email]
+    update_fields = [form.first_name, form.last_name, form.email, form.profile_picture]
     if form.validate_on_submit():
         current_user.first_name = form.first_name.data
         current_user.last_name = form.last_name.data

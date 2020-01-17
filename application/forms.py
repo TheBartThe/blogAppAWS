@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField
+from wtforms.validators import DataRequired, FileRequired, Length, Email, EqualTo, ValidationError
 from application.models import Posts, User
 from application import login_manager
 from flask_login import current_user
@@ -20,6 +20,8 @@ class PostForm(FlaskForm):
             Length(min=1, max=500)
         ]
     )
+
+    photos = FileField(validators=['Pictures'])
 
     submit = SubmitField("Post Content")
 
@@ -45,6 +47,8 @@ class RegistrationForm(FlaskForm):
         ]
     )
 
+    profile_picture = FileField(validators=['Profile Picture', FileRequired()])
+
     password = PasswordField('Password',
         validators=[
             DataRequired()
@@ -57,6 +61,7 @@ class RegistrationForm(FlaskForm):
             EqualTo('password')
         ]
     )
+
     submit = SubmitField('Sign Up')
 
     def validate_email(self, email):
@@ -102,6 +107,8 @@ class UpdateAccountForm(FlaskForm):
             Email()
         ]
     )
+
+    profile_picture = FileField(validators=['Profile picture', FileRequired()])
 
     submit = SubmitField('Update')
 
