@@ -3,6 +3,9 @@ from application import app, db, bcrypt
 from application.models import Posts, User
 from application.forms import PostForm, RegistrationForm, LoginForm, UpdateAccountForm
 from flask_login import login_user, current_user, logout_user, login_required
+import os
+
+BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 @app.route("/home")
 @app.route("/")
@@ -12,7 +15,8 @@ def home():
 
 @app.route("/about")
 def about():
-    return render_template("about.html", title = "About")
+    BUCKET_NAME = os.getenv("BUCKET_NAME")
+    return render_template("about.html", title = "About", bucket=BUCKET_NAME)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
