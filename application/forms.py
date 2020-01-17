@@ -22,7 +22,7 @@ class PostForm(FlaskForm):
         ]
     )
 
-    photos = FileField(validators=['Pictures'])
+    photos = FileField('Pictures')
 
     submit = SubmitField("Post Content")
 
@@ -48,7 +48,7 @@ class RegistrationForm(FlaskForm):
         ]
     )
 
-    profile_picture = FileField(validators=['Profile Picture', FileRequired()])
+    profile_picture = FileField('Profile Picture', validators=[FileRequired()])
 
     password = PasswordField('Password',
         validators=[
@@ -109,7 +109,7 @@ class UpdateAccountForm(FlaskForm):
         ]
     )
 
-    profile_picture = FileField(validators=['Profile picture', FileRequired()])
+    profile_picture = FileField('Profile Picture', validators=[FileRequired()])
 
     submit = SubmitField('Update')
 
