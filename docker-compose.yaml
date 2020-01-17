@@ -1,0 +1,31 @@
+---
+version: '3.7'
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+    ports:
+    - target: 80
+      published: 80
+      protocol: tcp
+    deploy:
+      replicas: 3
+    depends_on:
+    - application
+
+  application:
+    container_name: app
+    build: .
+    deploy:
+      replicas: 3
+    environment:
+    - FLASK_DB=${FLASK_DB}
+    - FLASK_USER=${FLASK_USER}
+    - FLASK_PASSWORD=${FLASK_PASSWORD}
+    - FLASK_HOST=${FLASK_HOST}
+    - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+...
